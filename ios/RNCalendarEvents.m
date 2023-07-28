@@ -24,6 +24,8 @@ static NSString *const _isDetached = @"isDetached";
 static NSString *const _availability = @"availability";
 static NSString *const _attendees    = @"attendees";
 static NSString *const _timeZone    = @"timeZone";
+NSMutableDictionary *attendeesRoles = [NSMutableDictionary dictionary];
+NSMutableDictionary *attendeesStatuses = [NSMutableDictionary dictionary];
 
 dispatch_queue_t serialQueue;
 
@@ -576,14 +578,12 @@ RCT_EXPORT_MODULE()
     }
 
     @try {
-        NSMutableDictionary *attendeesRoles = [NSMutableDictionary dictionary];
         [attendeesRoles setObject: @"Unknown" forKey: @"0"];
         [attendeesRoles setObject: @"Required" forKey: @"1"];
         [attendeesRoles setObject: @"Optional" forKey: @"2"];
         [attendeesRoles setObject: @"Chair" forKey: @"3"];
         [attendeesRoles setObject: @"NonParticipant" forKey: @"4"];
 
-        NSMutableDictionary *attendeesStatuses = [NSMutableDictionary dictionary];
         [attendeesStatuses setObject: @"Accepted" forKey: @"2"];
         [attendeesStatuses setObject: @"Completed" forKey: @"6"];
         [attendeesStatuses setObject: @"Declined" forKey: @"3"];
