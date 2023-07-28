@@ -598,7 +598,7 @@ RCT_EXPORT_MODULE()
             EKParticipant *organizer = event.organizer;
             NSMutableDictionary *organizerData = [NSMutableDictionary dictionary];
             
-            // Parse the email of the organizer of the events
+            // Parse the email of the organizer of the event
             //
             for (NSString *pairString in [organizer.description componentsSeparatedByString:@";"])
             {
