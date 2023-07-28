@@ -35,8 +35,7 @@
     "release": "npmpub",
     "test": "echo \"Everything is awesome!\"",
     "tsc": "tsc --noEmit --pretty --skipLibCheck --project ./tsconfig.json",
-    "build": "tsc --pretty --skipLibCheck --project ./tsconfig.json",
-    "prepublishOnly": "yarn build"
+    "build": "tsc --pretty --skipLibCheck --project ./tsconfig.json"
   },
   "devDependencies": {
     "husky": "^4.0.0",
