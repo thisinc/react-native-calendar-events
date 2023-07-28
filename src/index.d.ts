@@ -1,6 +1,8 @@
 // Type definitions for react-native-calendar v1.7.0
 // Typescript version: 3.0
 
+import { AttendeeStatus } from './types/RNcalendarEvents';
+
 type ISODateString = string;
 export type AuthorizationStatus =
   | "denied"
@@ -74,6 +76,12 @@ interface Calendar {
   color: string;
   /** The event availability settings supported by the calendar. */
   allowedAvailabilities: string[];
+  /** Status of the attendee */
+  status: AttendeeStatus;
+  /** If the attendee is the user's linked calendar */
+  isMe: boolean;
+  /** If the attendee is the organizer of the event */
+  isOrganizer: boolean;
 }
 
 interface CalendarEventBase {
@@ -158,17 +166,17 @@ export type CalendarAccessLevelAndroid =
 
 export type CalendarAccountSourceAndroid =
   | {
-      /** The Account name */
-      name: string;
-      /** The Account type */
-      type: string;
-    }
+    /** The Account name */
+    name: string;
+    /** The Account type */
+    type: string;
+  }
   | {
-      /** The Account name */
-      name: string;
-      /** The source (required if source.type is not used) */
-      isLocalAccount: boolean;
-    };
+    /** The Account name */
+    name: string;
+    /** The source (required if source.type is not used) */
+    isLocalAccount: boolean;
+  };
 
 export default class ReactNativeCalendarEvents {
   /**
