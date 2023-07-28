@@ -24,8 +24,6 @@ static NSString *const _isDetached = @"isDetached";
 static NSString *const _availability = @"availability";
 static NSString *const _attendees    = @"attendees";
 static NSString *const _timeZone    = @"timeZone";
-NSMutableDictionary *attendeesRoles = [NSMutableDictionary dictionary];
-NSMutableDictionary *attendeesStatuses = [NSMutableDictionary dictionary];
 
 dispatch_queue_t serialQueue;
 
@@ -512,25 +510,42 @@ RCT_EXPORT_MODULE()
 {
 
     NSDictionary *emptyCalendarEvent = @{
-                                         _title: @"",
-                                         _location: @"",
-                                         _startDate: @"",
-                                         _endDate: @"",
-                                         _allDay: @NO,
-                                         _notes: @"",
-                                         _url: @"",
-                                         _alarms: [NSArray array],
-                                         _attendees: [NSArray array],
-                                         _recurrence: @"",
-                                         _recurrenceRule: @{
-                                                 @"frequency": @"",
-                                                 @"interval": @"",
-                                                 @"occurrence": @"",
-                                                 @"endDate": @""
-                                                 },
-                                         _availability: @"",
-                                         _timeZone: @""
-                                         };
+        _title: @"",
+        _location: @"",
+        _startDate: @"",
+        _endDate: @"",
+        _allDay: @NO,
+        _notes: @"",
+        _url: @"",
+        _alarms: [NSArray array],
+        _attendees: [NSArray array],
+        _recurrence: @"",
+        _recurrenceRule: @{
+                @"frequency": @"",
+                @"interval": @"",
+                @"occurrence": @"",
+                @"endDate": @""
+                },
+        _availability: @"",
+        _timeZone: @""
+    };
+    NSDictionary *attendeeStatuses = @{
+        @"Accepted": @"2",
+        @"Completed": @"6",
+        @"Declined": @"3",
+        @"Delegated": @"5",
+        @"InProcess": @"7",
+        @"Pending": @"1",
+        @"Tentative": @"4",
+        @"Unknown": @"0"
+    }
+    NSDictionary *attendeesRoles = @{
+        @"Unknown": @"0"
+        @"Required": @"1",
+        @"Optional": @"2",
+        @"Chair": @"3",
+        @"NonParticipant": @"4"
+    }
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -578,25 +593,13 @@ RCT_EXPORT_MODULE()
     }
 
     @try {
-        [attendeesRoles setObject: @"Unknown" forKey: @"0"];
-        [attendeesRoles setObject: @"Required" forKey: @"1"];
-        [attendeesRoles setObject: @"Optional" forKey: @"2"];
-        [attendeesRoles setObject: @"Chair" forKey: @"3"];
-        [attendeesRoles setObject: @"NonParticipant" forKey: @"4"];
-
-        [attendeesStatuses setObject: @"Accepted" forKey: @"2"];
-        [attendeesStatuses setObject: @"Completed" forKey: @"6"];
-        [attendeesStatuses setObject: @"Declined" forKey: @"3"];
-        [attendeesStatuses setObject: @"Delegated" forKey: @"5"];
-        [attendeesStatuses setObject: @"InProcess" forKey: @"7"];
-        [attendeesStatuses setObject: @"Pending" forKey: @"1"];
-        [attendeesStatuses setObject: @"Tentative" forKey: @"4"];
-        [attendeesStatuses setObject: @"Unknown" forKey: @"0"];
-
         NSString *organizerEmail = @"";
         if (event.organizer) {
             EKParticipant *organizer = event.organizer;
             NSMutableDictionary *organizerData = [NSMutableDictionary dictionary];
+            
+            // Parse the email of the organizer of the events
+            //
             for (NSString *pairString in [organizer.description componentsSeparatedByString:@";"])
             {
                 NSArray *pair = [pairString componentsSeparatedByString:@"="];
@@ -610,7 +613,9 @@ RCT_EXPORT_MODULE()
         if (event.attendees) {
             NSMutableArray *attendees = [[NSMutableArray alloc] init];
             for (EKParticipant *attendee in event.attendees) {
-
+                
+                // Parse details about the attendee
+                //
                 NSMutableDictionary *descriptionData = [NSMutableDictionary dictionary];
                 for (NSString *pairString in [attendee.description componentsSeparatedByString:@";"])
                 {
@@ -628,7 +633,7 @@ RCT_EXPORT_MODULE()
                 NSString *status = [descriptionData valueForKey:@"status"];
                 bool isMe = attendee.currentUser;
                 bool isOrganizer = email && ![email isEqualToString:@"(null)"] && [email isEqualToString:organizerEmail];
-
+z
                 [formattedAttendee setValue:[NSNumber numberWithBool:isMe] forKey:@"isMe"];
                 [formattedAttendee setValue:[NSNumber numberWithBool:isOrganizer] forKey:@"isOrganizer"];
 
