@@ -57,6 +57,13 @@ interface Attendee {
   email: string;
   /** iOS ONLY - The The phone number of the attendee. */
   phone?: string;
+  role: 'Unknown' | 'Required' | 'Optional' | 'Chair' | 'NonParticipant';
+  /** Status of the attendee */
+  status: AttendeeStatus;
+  /** If the attendee is the user's linked calendar */
+  isMe: boolean;
+  /** If the attendee is the organizer of the event */
+  isOrganizer: boolean;
 }
 
 interface Calendar {
@@ -76,12 +83,6 @@ interface Calendar {
   color: string;
   /** The event availability settings supported by the calendar. */
   allowedAvailabilities: string[];
-  /** Status of the attendee */
-  status: AttendeeStatus;
-  /** If the attendee is the user's linked calendar */
-  isMe: boolean;
-  /** If the attendee is the organizer of the event */
-  isOrganizer: boolean;
 }
 
 interface CalendarEventBase {
