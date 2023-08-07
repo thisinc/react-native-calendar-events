@@ -538,14 +538,14 @@ RCT_EXPORT_MODULE()
         @"Pending": @"1",
         @"Tentative": @"4",
         @"Unknown": @"0"
-    }
+    };
     NSDictionary *attendeesRoles = @{
-        @"Unknown": @"0"
+        @"Unknown": @"0",
         @"Required": @"1",
         @"Optional": @"2",
         @"Chair": @"3",
         @"NonParticipant": @"4"
-    }
+    };
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -633,7 +633,7 @@ RCT_EXPORT_MODULE()
                 NSString *status = [descriptionData valueForKey:@"status"];
                 bool isMe = attendee.currentUser;
                 bool isOrganizer = email && ![email isEqualToString:@"(null)"] && [email isEqualToString:organizerEmail];
-z
+
                 [formattedAttendee setValue:[NSNumber numberWithBool:isMe] forKey:@"isMe"];
                 [formattedAttendee setValue:[NSNumber numberWithBool:isOrganizer] forKey:@"isOrganizer"];
 
@@ -661,8 +661,8 @@ z
                 else {
                     [formattedAttendee setValue:@"Unknown" forKey:@"role"];
                 }
-                if (status && ![status isEqualToString:@"(null)"] && attendeesStatuses[status]) {
-                    [formattedAttendee setValue:attendeesStatuses[status] forKey:@"status"];
+                if (status && ![status isEqualToString:@"(null)"] && attendeeStatuses[status]) {
+                    [formattedAttendee setValue:attendeeStatuses[status] forKey:@"status"];
                 }
                 else {
                     [formattedAttendee setValue:@"Unknown" forKey:@"status"];
