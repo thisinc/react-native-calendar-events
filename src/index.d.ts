@@ -1,7 +1,6 @@
 // Type definitions for react-native-calendar v1.7.0
 // Typescript version: 3.0
 
-import { AttendeeStatus } from './types/RNcalendarEvents';
 
 type ISODateString = string;
 export type AuthorizationStatus =
@@ -50,7 +49,13 @@ interface RecurrenceRule {
   interval: number;
 }
 
-interface Attendee {
+/**
+ * Platform specific attendee statuses returned by the native iOS and Android Calendar APIs.
+ * Numbered values are Android only.
+ * String values are iOS only.
+ */
+export type AttendeeStatus = "Accepted" | "Completed" | "Delegated" | "InProcess" | "Declined" | "Tentative" | "Unknown" | "Pending" | 0 | 1 | 2 | 3 | 4;
+export interface Attendee {
   /** The name of the attendee. */
   name: string;
   /** The email address of the attendee. */

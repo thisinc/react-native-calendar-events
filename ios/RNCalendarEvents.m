@@ -529,23 +529,6 @@ RCT_EXPORT_MODULE()
         _availability: @"",
         _timeZone: @""
     };
-    NSDictionary *attendeeStatuses = @{
-        @"Accepted": @"2",
-        @"Completed": @"6",
-        @"Declined": @"3",
-        @"Delegated": @"5",
-        @"InProcess": @"7",
-        @"Pending": @"1",
-        @"Tentative": @"4",
-        @"Unknown": @"0"
-    };
-    NSDictionary *attendeesRoles = @{
-        @"Unknown": @"0",
-        @"Required": @"1",
-        @"Optional": @"2",
-        @"Chair": @"3",
-        @"NonParticipant": @"4"
-    };
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -593,6 +576,22 @@ RCT_EXPORT_MODULE()
     }
 
     @try {
+        NSMutableDictionary *attendeeRoles = [NSMutableDictionary dictionary];
+        [attendeeRoles setObject: @"Unknown" forKey: @"0"];
+        [attendeeRoles setObject: @"Required" forKey: @"1"];
+        [attendeeRoles setObject: @"Optional" forKey: @"2"];
+        [attendeeRoles setObject: @"Chair" forKey: @"3"];
+        [attendeeRoles setObject: @"NonParticipant" forKey: @"4"];
+
+        NSMutableDictionary *attendeeStatuses = [NSMutableDictionary dictionary];
+        [attendeeStatuses setObject: @"Accepted" forKey: @"2"];
+        [attendeeStatuses setObject: @"Completed" forKey: @"6"];
+        [attendeeStatuses setObject: @"Declined" forKey: @"3"];
+        [attendeeStatuses setObject: @"Delegated" forKey: @"5"];
+        [attendeeStatuses setObject: @"InProcess" forKey: @"7"];
+        [attendeeStatuses setObject: @"Pending" forKey: @"1"];
+        [attendeeStatuses setObject: @"Tentative" forKey: @"4"];
+        [attendeeStatuses setObject: @"Unknown" forKey: @"0"];
         NSString *organizerEmail = @"";
         if (event.organizer) {
             EKParticipant *organizer = event.organizer;
@@ -655,8 +654,8 @@ RCT_EXPORT_MODULE()
                 else {
                     [formattedAttendee setValue:@"" forKey:@"name"];
                 }
-                 if (role && ![role isEqualToString:@"(null)"] && attendeesRoles[role]) {
-                    [formattedAttendee setValue:attendeesRoles[role] forKey:@"role"];
+                 if (role && ![role isEqualToString:@"(null)"] && attendeeRoles[role]) {
+                    [formattedAttendee setValue:attendeeRoles[role] forKey:@"role"];
                 }
                 else {
                     [formattedAttendee setValue:@"Unknown" forKey:@"role"];
