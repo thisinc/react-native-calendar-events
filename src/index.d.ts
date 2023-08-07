@@ -57,7 +57,6 @@ interface Attendee {
   email: string;
   /** iOS ONLY - The The phone number of the attendee. */
   phone?: string;
-  role: 'Unknown' | 'Required' | 'Optional' | 'Chair' | 'NonParticipant';
   /** Status of the attendee */
   status: AttendeeStatus;
   /** If the attendee is the user's linked calendar */
